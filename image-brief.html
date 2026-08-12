@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>iPhone 18 專屬頁｜網頁用圖需求單</title>
+<style>
+:root{
+  --ink:#1d1d1f; --soft:#6e6e73; --faint:#86868b; --line:#e5e5e7;
+  --page:#fff; --wash:#f5f5f7; --brand:#C63A18; --safe:#0a84ff; --warn:#b8860b;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+  --han:-apple-system,"PingFang TC","Noto Sans TC","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--han);
+  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px 100px}
+header.top{padding:56px 0 32px;border-bottom:3px solid var(--ink)}
+h1{font-size:clamp(28px,4.6vw,40px);font-weight:600;letter-spacing:-.02em;margin:0 0 10px;line-height:1.15}
+.meta{color:var(--soft);font-size:14px;margin:0}
+.meta b{color:var(--ink);font-weight:600}
+
+h2{font-size:clamp(21px,3vw,27px);font-weight:600;letter-spacing:-.01em;
+  margin:64px 0 6px;padding-top:28px;border-top:1px solid var(--line)}
+h2 .n{display:inline-block;min-width:34px;height:34px;line-height:34px;text-align:center;
+  background:var(--ink);color:#fff;border-radius:50%;font-size:16px;margin-right:12px;vertical-align:2px}
+h3{font-size:17px;font-weight:600;margin:32px 0 10px;letter-spacing:-.005em}
+h3::before{content:"";display:inline-block;width:4px;height:15px;background:var(--brand);
+  margin-right:9px;vertical-align:-2px;border-radius:2px}
+p{margin:0 0 12px}
+.lede{color:var(--soft);font-size:15px;margin:0 0 20px}
+
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:14.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--wash);font-weight:600;width:34%;white-space:nowrap}
+td code,p code,li code{font-family:var(--mono);font-size:13px;background:var(--wash);
+  padding:1px 6px;border-radius:4px}
+.big{font-size:19px;font-weight:600;letter-spacing:-.01em}
+
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin:0 0 7px}
+
+.box{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:18px 0;background:var(--wash)}
+.box.warn{background:#fff8e6;border-color:#e8d48a}
+.box.stop{background:#fdecea;border-color:#f0b4ad}
+.box .bt{font-weight:600;margin:0 0 8px;font-size:15px}
+.box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0}
+
+figure{margin:20px 0 8px}
+figcaption{font-size:13px;color:var(--soft);margin-top:10px;line-height:1.6}
+svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:10px;background:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin:12px 0 0;font-size:13px;color:var(--soft)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:15px;height:15px;border-radius:3px;flex:none}
+
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;
+  background:var(--ink);color:#fff;margin-left:8px;vertical-align:2px;letter-spacing:.02em}
+.pill.n{background:var(--brand)}
+.pill.g{background:#2d7d46}
+
+.ref{border-left:3px solid var(--safe);padding:2px 0 2px 16px;margin:14px 0}
+.ref a{color:var(--safe);word-break:break-all}
+.yes,.no{margin:10px 0 0;padding-left:0;list-style:none}
+.yes li::before{content:"要 ";color:#2d7d46;font-weight:700;font-size:13px}
+.no li::before{content:"不要 ";color:#c0392b;font-weight:700;font-size:13px}
+
+.deliver{overflow-x:auto}
+.deliver table{min-width:640px}
+footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
+@media print{body{font-size:12px}h2{page-break-before:always}header.top+h2{page-break-before:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>iPhone 18 專屬頁｜網頁用圖需求單</h1>
+  <p class="meta">
+    對應頁面 <b>iphone18-promo-prototype.html</b>　·　共 <b>3 個版位、42 張圖</b><br>
+    所有尺寸與百分比皆由原型實際量測取得，非估算。
+  </p>
+</header>
+
+<h2><span class="n">0</span>先讀：這頁的圖會被「裁切」</h2>
+<p class="lede">這是本需求單最重要的一件事，看完再往下。</p>
+
+<p>版位 ① 和 ② 使用 <code>background-size: cover</code>——同一張圖在手機和桌機會被裁掉<b>完全不同</b>的部分。
+只看「交付尺寸」做圖，很容易做出一張在桌機很好看、但在手機主體被切掉的圖。</p>
+
+<p>所以每個版位除了尺寸，都額外標了兩個框：</p>
+<ul>
+  <li><b>安全區</b>——在<u>所有螢幕寬度</u>都看得到的範圍。主體、產品、任何不能少的東西都必須在框內。</li>
+  <li><b>壓文區</b>——網頁文字會蓋在這裡。這塊要保持安靜：低對比、無重點細節、不要有高光。</li>
+</ul>
+
+<div class="box warn">
+  <p class="bt">⚠️ 手機優先</p>
+  <p>倫印全站行動裝置流量 <b>89.87%</b>。任何取捨一律以手機版的呈現為準。</p>
+</div>
+
+<div class="box">
+  <p class="bt">📱 版位 ③ 例外</p>
+  <p>組合卡用的是 <code>contain</code>——<b>整張圖一定完整顯示、不會被裁</b>，所以沒有安全區問題。
+  但相對的，圖<b>必須是正方形</b>，否則上下會出現白邊。</p>
+</div>
+
+
+<!-- ═══════════════ 版位 1 ═══════════════ -->
+<h2><span class="n">1</span>六格系列按鈕圖<span class="pill n">6 張</span></h2>
+<p class="lede">頁面上方「挑一種殼，整組就配好」的六宮格，點了會跳到該系列。</p>
+
+<table>
+  <tr><th>交付尺寸</th><td class="big">800 × 600 px（4:3）</td></tr>
+  <tr><th>格式</th><td>JPG（品質 80 以上）或 PNG；單張 ≤ 400KB</td></tr>
+  <tr><th>張數</th><td>6 張，一個系列一張</td></tr>
+  <tr><th>網頁顯示尺寸</th><td>手機 167×147　→　桌機最大 340×255</td></tr>
+  <tr><th>顯示比例範圍</th><td>1.136（手機）→ 1.333（桌機）</td></tr>
+  <tr><th>裁切方式</th><td><code>cover</code>，正中對齊 → <b>手機版左右各裁掉 7.4%</b></td></tr>
+  <tr><th>安全區（橫向）</th><td class="big">8% – 92%</td></tr>
+  <tr><th>手機主體落點</th><td class="big">橫向 67% – 92%</td></tr>
+  <tr><th>壓文區</th><td>左上角，手機約 <b>49% 寬 × 40% 高</b>；桌機文字橫跨整個上方（標題 32px）</td></tr>
+</table>
+
+<figure>
+<svg viewBox="0 0 800 600" role="img" aria-label="六格按鈕圖裁切示意">
+  <rect width="800" height="600" fill="#fafafa"/>
+  <!-- 手機裁切範圍 8%-92% -->
+  <rect x="0" y="0" width="59" height="600" fill="#c0392b" opacity=".14"/>
+  <rect x="741" y="0" width="59" height="600" fill="#c0392b" opacity=".14"/>
+  <!-- 安全區 -->
+  <rect x="59" y="0" width="682" height="600" fill="none" stroke="#0a84ff" stroke-width="3" stroke-dasharray="10 7"/>
+  <!-- 壓文區 -->
+  <rect x="0" y="0" width="392" height="240" fill="#1d1d1f" opacity=".07"/>
+  <rect x="0" y="0" width="392" height="240" fill="none" stroke="#1d1d1f" stroke-width="2" stroke-dasharray="6 6" opacity=".55"/>
+  <text x="18" y="34" font-size="21" font-weight="700" fill="#1d1d1f" font-family="sans-serif">壓文區</text>
+  <text x="18" y="60" font-size="15" fill="#6e6e73" font-family="sans-serif">系列名＋說明＋標籤</text>
+  <text x="18" y="82" font-size="15" fill="#6e6e73" font-family="sans-serif">左半已疊白霧，保持淺色乾淨</text>
+  <!-- 主體建議落點 67%-92% -->
+  <rect x="536" y="120" width="205" height="420" fill="#2d7d46" opacity=".13"/>
+  <rect x="536" y="120" width="205" height="420" fill="none" stroke="#2d7d46" stroke-width="3"/>
+  <text x="548" y="152" font-size="19" font-weight="700" fill="#2d7d46" font-family="sans-serif">手機主體</text>
+  <text x="548" y="176" font-size="14" fill="#2d7d46" font-family="sans-serif">67%–92%</text>
+  <text x="548" y="196" font-size="14" fill="#2d7d46" font-family="sans-serif">高度 ≥ 55%</text>
+  <!-- 標線 -->
+  <text x="8" y="592" font-size="14" fill="#c0392b" font-family="sans-serif">手機裁掉</text>
+  <text x="700" y="592" font-size="14" fill="#c0392b" font-family="sans-serif">手機裁掉</text>
+  <text x="330" y="580" font-size="15" fill="#86868b" font-family="sans-serif">800 × 600</text>
+</svg>
+<figcaption>紅色＝手機版會被裁掉（左右各 7.4%）　·　藍框＝安全區　·　灰塊＝文字會壓在上面　·　綠框＝手機建議落點</figcaption>
+<div class="legend">
+  <span><i class="sw" style="background:#c0392b;opacity:.35"></i>手機被裁</span>
+  <span><i class="sw" style="background:#0a84ff"></i>安全區</span>
+  <span><i class="sw" style="background:#1d1d1f;opacity:.2"></i>壓文區</span>
+  <span><i class="sw" style="background:#2d7d46;opacity:.4"></i>主體落點</span>
+</div>
+</figure>
+
+<h3>內容與風格</h3>
+<ul>
+  <li><b>人物拿著手機，手機是主角。</b>手機在畫面中的高度 <b>不得小於畫布高度的 55%</b>，可以跟人物一樣大或更大。</li>
+  <li><b>人物只入鏡局部</b>——手、前臂、肩頸。<b>不露臉</b>；若構圖需要臉，用 AI 另外生成，不使用真實人物肖像。</li>
+  <li>手機主體放<b>右側</b>，右緣至少離畫布右邊 8%（貼齊右邊會在手機版被削掉）。</li>
+  <li>左上角保持<b>淺色、乾淨、低細節</b>——那裡要放深色文字。頁面已自動疊一層白霧漸層（左→右淡出），<b>設計不需要自己壓白</b>。</li>
+  <li>六張要能<b>並排看起來是一套</b>：同一種打光、同一種背景調性，只有殼的顏色與情境不同。</li>
+</ul>
+
+<div class="box stop">
+  <p class="bt">🚫 這個尺寸做不到的事</p>
+  <p>手機版單格只有 <b>167 × 147 px</b>，而且左上 49%×40% 被文字蓋住。
+  <b>全身人物照在這個尺寸一定糊掉</b>，手機大概只剩 50px 高、看不出是什麼殼。
+  參考看板裡「登山全身照」「全身模特兒」那類構圖在這個版位不能用——要用的是<b>只到手／半身、手機貼近鏡頭</b>的裁法。</p>
+</div>
+
+<h3>參考</h3>
+<div class="ref">
+  <a href="https://pin.it/6qlSU8tQY">https://pin.it/6qlSU8tQY</a>（Pinterest 看板「iPhone 18」）
+</div>
+<ul class="yes">
+  <li>參考<b>右欄那三張橫幅式廣告</b>的裁法：人物只到手／半身，手機貼近鏡頭、佔畫面很大</li>
+  <li>參考它們的<b>打光</b>：柔和單一光源、乾淨陰影</li>
+  <li>參考<b>文字與產品分居左右</b>的構圖關係</li>
+</ul>
+<ul class="no">
+  <li>不要參考全身人物、大場景那幾張（尺寸不允許）</li>
+  <li>看板中有一張是 <b>Xiaomi 17 Pro 的廣告</b>——只看構圖，<b>不要</b>沿用它的配色與視覺語言，避免做出像小米廣告的圖</li>
+  <li>不要照抄任何一張參考圖的版面；參考只用於方向</li>
+</ul>
+
+
+<!-- ═══════════════ 版位 2 ═══════════════ -->
+<h2><span class="n">2</span>系列情境 Banner<span class="pill n">6 張</span></h2>
+<p class="lede">每個系列區塊最上方的滿版橫幅，白色標題壓在上面。</p>
+
+<table>
+  <tr><th>交付尺寸</th><td class="big">2400 × 1350 px（16:9）</td></tr>
+  <tr><th>格式</th><td>JPG（品質 80 以上）；單張 ≤ 900KB</td></tr>
+  <tr><th>張數</th><td>6 張，一個系列一張</td></tr>
+  <tr><th>網頁顯示尺寸</th><td>滿版寬度；高度 <code>clamp(300px, 60vw, 440px)</code></td></tr>
+  <tr><th>顯示比例範圍</th><td class="big">1.25（手機）→ 4.36（寬螢幕）</td></tr>
+  <tr><th>裁切方式</th><td><code>cover</code>，垂直錨點 60%（手機）／55%（桌機）</td></tr>
+  <tr><th>安全區</th><td class="big">橫向 15% – 85%　·　縱向 33% – 73%</td></tr>
+  <tr><th>壓文區</th><td>上方置中，涵蓋畫面縱向 <b>11% – 53%</b></td></tr>
+  <tr><th>主體最佳落點</th><td class="big">縱向 55% – 73%，水平置中</td></tr>
+</table>
+
+<figure>
+<svg viewBox="0 0 800 450" role="img" aria-label="系列 Banner 裁切示意">
+  <rect width="800" height="450" fill="#fafafa"/>
+  <!-- 桌機只看得到縱向 33%-73% -->
+  <rect x="0" y="0" width="800" height="147" fill="#c0392b" opacity=".12"/>
+  <rect x="0" y="330" width="800" height="120" fill="#c0392b" opacity=".12"/>
+  <!-- 手機左右裁掉 15% -->
+  <rect x="0" y="0" width="119" height="450" fill="#c0392b" opacity=".12"/>
+  <rect x="681" y="0" width="119" height="450" fill="#c0392b" opacity=".12"/>
+  <!-- 安全區交集 -->
+  <rect x="119" y="147" width="562" height="183" fill="#0a84ff" opacity=".06"/>
+  <rect x="119" y="147" width="562" height="183" fill="none" stroke="#0a84ff" stroke-width="3" stroke-dasharray="10 7"/>
+  <text x="131" y="172" font-size="16" font-weight="700" fill="#0a84ff" font-family="sans-serif">安全區　橫 15–85%　縱 33–73%</text>
+  <!-- 壓文區 11%-53% -->
+  <rect x="180" y="50" width="440" height="188" fill="#1d1d1f" opacity=".55"/>
+  <text x="400" y="96" font-size="17" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">壓文區　縱向 11%–53%</text>
+  <text x="400" y="126" font-size="26" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">系列名（白色大標）</text>
+  <text x="400" y="156" font-size="15" fill="#e8e8ea" text-anchor="middle" font-family="sans-serif">英文小標＋一句副標</text>
+  <text x="400" y="196" font-size="14" fill="#c9c9cc" text-anchor="middle" font-family="sans-serif">頁面已自動疊深色漸層罩</text>
+  <text x="400" y="218" font-size="14" fill="#c9c9cc" text-anchor="middle" font-family="sans-serif">設計不需要自己壓暗</text>
+  <!-- 主體落點 -->
+  <rect x="250" y="250" width="300" height="80" fill="#2d7d46" opacity=".18"/>
+  <rect x="250" y="250" width="300" height="80" fill="none" stroke="#2d7d46" stroke-width="3"/>
+  <text x="400" y="297" font-size="17" font-weight="700" fill="#2d7d46" text-anchor="middle" font-family="sans-serif">主體放這裡（縱向 55–73%）</text>
+  <text x="8" y="440" font-size="13" fill="#c0392b" font-family="sans-serif">紅＝某些螢幕寬度看不到</text>
+  <text x="700" y="440" font-size="13" fill="#86868b" font-family="sans-serif">2400×1350</text>
+</svg>
+<figcaption>
+  比例從 1.25 拉到 4.36 是很大的變形：<b>手機版左右各裁掉 15%</b>（因為畫面變高變窄），
+  <b>寬螢幕上下總共裁掉 59%</b>（因為畫面變得極扁）。只有中間那塊藍框是所有寬度都看得到的。
+</figcaption>
+</figure>
+
+<h3>內容與風格</h3>
+<p><b>維持目前原型上那批 AI 圖的方向</b>——真實生活情境、暗調、電影感。具體要求：</p>
+<ul>
+  <li>上半部（縱向 0–55%）保持<b>安靜</b>：低對比、無重點細節、<b>不要有高光或亮色塊</b>，否則會跟白色標題打架。</li>
+  <li>主體（人＋手機）放在<b>縱向 55%–73%、水平置中</b>——這是唯一同時滿足「在安全區內」與「避開文字」的區間。</li>
+  <li>頁面已疊一層由上往下淡出的深色漸層罩（頂端 72% 不透明），<b>設計不需要自己把圖壓暗</b>，交原圖即可。</li>
+  <li>六張的情境要能區分系列個性（防摔／支架／極薄／…），但<b>色溫與顆粒感要一致</b>，滑過去才像同一個品牌。</li>
+</ul>
+
+
+<!-- ═══════════════ 版位 3 ═══════════════ -->
+<h2><span class="n">3</span>組合商品卡主視覺<span class="pill n">30 張</span></h2>
+<p class="lede">每個系列區塊裡橫滑的組合卡，卡片上方那張圖。</p>
+
+<div class="box warn">
+  <p class="bt">⚠️ 張數請先確認</p>
+  <p>共有 <b>6 系列 × 5 種組合 = 30 張</b>（① 雙重防護組 ② 三重防護組 ③ 風格搭配組 ④ 隨身實用組 ⑤ 開箱即用組）。
+  若 30 張太多，見本節最後的「減量方案」。</p>
+</div>
+
+<table>
+  <tr><th>交付尺寸</th><td class="big">600 × 600 px（正方形）</td></tr>
+  <tr><th>格式</th><td>PNG（透明背景）或 JPG（純白底）；單張 ≤ 300KB</td></tr>
+  <tr><th>張數</th><td>30 張（待確認，見上）</td></tr>
+  <tr><th>網頁顯示尺寸</th><td>最大 300 × 300（卡片 <code>max-width:300px</code>）</td></tr>
+  <tr><th>裁切方式</th><td class="big"><code>contain</code>　整張完整顯示、<b>不會被裁</b></td></tr>
+  <tr><th>安全區</th><td>不適用（不裁切）</td></tr>
+  <tr><th>壓文區</th><td>無。文字全部在圖的<b>下方</b>，不會蓋到圖</td></tr>
+  <tr><th>底色</th><td>卡片底色為<b>純白 #fff</b>。非正方形的圖上下會露出白邊</td></tr>
+</table>
+
+<figure>
+<svg viewBox="0 0 800 420" role="img" aria-label="組合卡圖位示意">
+  <rect width="800" height="420" fill="#fafafa"/>
+  <!-- 正確：正方形 -->
+  <g transform="translate(70,40)">
+    <rect width="260" height="260" fill="#fff" stroke="#2d7d46" stroke-width="3"/>
+    <rect x="30" y="30" width="200" height="200" fill="#2d7d46" opacity=".12"/>
+    <text x="130" y="125" font-size="16" font-weight="700" fill="#2d7d46" text-anchor="middle" font-family="sans-serif">組合產品群組</text>
+    <text x="130" y="150" font-size="14" fill="#2d7d46" text-anchor="middle" font-family="sans-serif">四周留 8–12% 邊距</text>
+    <text x="130" y="292" font-size="16" font-weight="700" fill="#2d7d46" text-anchor="middle" font-family="sans-serif">✓ 正方形 600×600</text>
+    <text x="130" y="314" font-size="13" fill="#6e6e73" text-anchor="middle" font-family="sans-serif">完美填滿，無白邊</text>
+  </g>
+  <!-- 錯誤：橫幅 -->
+  <g transform="translate(440,40)">
+    <rect width="260" height="260" fill="#fff" stroke="#c0392b" stroke-width="3"/>
+    <rect y="0" width="260" height="65" fill="#c0392b" opacity=".14"/>
+    <rect y="195" width="260" height="65" fill="#c0392b" opacity=".14"/>
+    <rect y="65" width="260" height="130" fill="#c0392b" opacity=".07"/>
+    <text x="130" y="38" font-size="14" fill="#c0392b" text-anchor="middle" font-family="sans-serif">白邊</text>
+    <text x="130" y="135" font-size="15" fill="#c0392b" text-anchor="middle" font-family="sans-serif">4:3 的圖</text>
+    <text x="130" y="232" font-size="14" fill="#c0392b" text-anchor="middle" font-family="sans-serif">白邊</text>
+    <text x="130" y="292" font-size="16" font-weight="700" fill="#c0392b" text-anchor="middle" font-family="sans-serif">✗ 非正方形</text>
+    <text x="130" y="314" font-size="13" fill="#6e6e73" text-anchor="middle" font-family="sans-serif">上下露白邊，卡片變矮</text>
+  </g>
+</svg>
+<figcaption><code>contain</code> 不裁切也不放大填滿，所以比例不對就會留白。<b>一律交正方形。</b></figcaption>
+</figure>
+
+<h3>內容與風格</h3>
+<ul>
+  <li>畫面要<b>一眼看出這組包含幾件</b>——組合裡的每一件都要出現，且辨識得出來。</li>
+  <li>單一乾淨背景（純白或極淺單色），產品群組置中，<b>四周留 8–12% 邊距</b>（縮到 300px 時才不會擠）。</li>
+  <li>同一系列的 5 張要能<b>橫滑看起來是一套</b>：同角度、同打光、同背景。</li>
+  <li>件數多的組合（三重、開箱即用）用<b>層疊或懸浮排列</b>，不要平鋪縮小——縮到 300px 會全部看不清。</li>
+</ul>
+
+<h3>參考</h3>
+<div class="ref">
+  <a href="https://pin.it/6JoH9YnmU">https://pin.it/6JoH9YnmU</a>（Pinterest 看板「組合產品主視覺」）
+</div>
+<ul class="yes">
+  <li>參考<b>單一飽和底色＋產品群組懸浮</b>的排法（橘色那幾張）</li>
+  <li>參考 <b>Anker MagGo 那張的乾淨陳列</b>與留白比例</li>
+  <li>參考俄文橘色那張<b>用連接符號把配件串起來</b>的手法——它已經是三重防護組商品內頁採用的方向，兩邊視覺可以統一</li>
+</ul>
+<ul class="no">
+  <li>不要照抄參考圖的品牌色（Anker 白、小米橘都不是倫印的顏色）</li>
+  <li>不要在圖上加文字——卡片本身已經有品名、價格、省額、內容清單，圖上再加會重複且縮小後看不清</li>
+</ul>
+
+<div class="box">
+  <p class="bt">💡 減量方案（如果 30 張太多）</p>
+  <ol>
+    <li><b>每系列只做主打那一張</b>（②三重防護組＝「最多人選」），其餘 4 張沿用現有單品去背圖 →
+      <b>6 張</b>。缺點：同一列卡片風格不一致。</li>
+    <li><b>每系列做 1 張情境圖、5 張組合卡共用</b> → <b>6 張</b>。缺點：看不出各組合差在哪，但卡片下方本來就有內容清單。</li>
+    <li><b>分兩批</b>：先做 6 個系列的三重防護組（最高單價、主推），上線看成效再決定要不要補完 →
+      第一批 <b>6 張</b>。<b>建議選這個</b>。</li>
+  </ol>
+</div>
+
+
+<!-- ═══════════════ 交付 ═══════════════ -->
+<h2><span class="n">4</span>交付方式</h2>
+
+<div class="deliver">
+<table>
+  <tr><th style="width:22%">版位</th><th style="width:20%">尺寸</th><th style="width:10%">張數</th><th style="width:14%">格式</th><th>命名</th></tr>
+  <tr><td>① 六格系列按鈕</td><td>800 × 600</td><td>6</td><td>JPG ≤400KB</td><td><code>ov-〔系列英文代號〕.jpg</code></td></tr>
+  <tr><td>② 系列情境 Banner</td><td>2400 × 1350</td><td>6</td><td>JPG ≤900KB</td><td><code>banner-〔系列英文代號〕.jpg</code></td></tr>
+  <tr><td>③ 組合卡主視覺</td><td>600 × 600</td><td>30（待確認）</td><td>PNG／JPG ≤300KB</td><td><code>bundle-〔系列〕-〔組合編號〕.png</code></td></tr>
+</table>
+</div>
+
+<ul>
+  <li><b>色彩描述檔一律 sRGB</b>，不要交 Adobe RGB／CMYK（網頁上會偏色）。</li>
+  <li>請同時附<b>未裁切的原始檔</b>（PSD／AI／原始 RAW），日後版位比例調整才不用重做。</li>
+  <li>交付前請<b>把圖縮到 300px 寬看一次</b>——那是手機上組合卡的實際大小。看不清楚就是不能用。</li>
+</ul>
+
+<div class="box stop">
+  <p class="bt">🚫 不可使用</p>
+  <p>目前原型上那批圖有一部分是 <b>AI 生成的佔位圖</b>（存放在 <code>ai-placeholder/</code>），
+  僅供版面示意，<b>絕對不可以直接上線</b>。本需求單的用途就是把它們全部換掉。</p>
+</div>
+
+
+<h2><span class="n">5</span>待確認</h2>
+<ol>
+  <li><b>版位 ③ 要做 30 張還是先做 6 張？</b>（建議先做 6 張三重防護組，見該節減量方案）</li>
+  <li><b>六個系列各自的情境設定</b>——每個系列的使用場景、人物設定、色調，需逐一給設計。</li>
+  <li><b>人物是實拍還是 AI 生成？</b>若用 AI，需確認可商用授權；若實拍，需確認肖像使用同意書。</li>
+  <li><b>交付期限</b>與是否分批。</li>
+</ol>
+
+<footer>
+  尺寸與百分比皆由 <code>iphone18-promo-prototype.html</code> 在瀏覽器實際量測取得（量測日 2026-08-12），
+  非設計稿估算值。若原型版面調整，本需求單需同步重量。
+</footer>
+
+</div>
+</body>
+</html>

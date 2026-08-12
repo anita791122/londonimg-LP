@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>iPhone 18 專屬頁｜需求單 × 原型 對照</title>
+<style>
+:root{
+  --ink:#1d1d1f; --soft:#6e6e73; --faint:#86868b; --line:#d8d8dc;
+  --bar:#1d1d1f; --page:#f0f0f2; --panel:#fff; --brand:#C63A18; --safe:#0a84ff;
+  --han:-apple-system,"PingFang TC","Noto Sans TC","Segoe UI",sans-serif;
+  --barh:52px; --subh:44px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--han);
+  font-size:15px;-webkit-font-smoothing:antialiased;overflow:hidden}
+
+/* ── 頂列 ── */
+.bar{height:var(--barh);background:var(--bar);color:#f5f5f7;display:flex;align-items:center;
+  gap:16px;padding:0 16px;position:relative;z-index:10}
+.bar .ttl{font-weight:600;letter-spacing:-.01em;font-size:15px;white-space:nowrap;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;flex:0 1 auto}
+.bar .ttl small{display:block;font-weight:400;font-size:11px;color:#a1a1a6;letter-spacing:0;margin-top:-1px;
+  overflow:hidden;text-overflow:ellipsis}
+.spacer{flex:1 1 0;min-width:0}
+
+.seg{display:flex;background:rgba(255,255,255,.13);border-radius:9px;padding:3px;gap:2px;flex:none}
+.seg button{appearance:none;border:0;background:transparent;color:#d2d2d7;font:inherit;font-size:13px;
+  font-weight:500;padding:5px 13px;border-radius:7px;cursor:pointer;white-space:nowrap;transition:.15s}
+.seg button:hover{color:#fff}
+.seg button[aria-pressed="true"]{background:#fff;color:#1d1d1f;font-weight:600}
+
+/* ── 內容區 ── */
+.stage{position:absolute;inset:var(--barh) 0 0;display:flex;gap:1px;background:var(--line)}
+.pane{flex:1 1 50%;min-width:0;background:var(--panel);display:flex;flex-direction:column;position:relative}
+body[data-view="brief"] .pane.proto{display:none}
+body[data-view="proto"] .pane.brief{display:none}
+
+.phead{height:var(--subh);flex:none;display:flex;align-items:center;gap:10px;padding:0 14px;
+  border-bottom:1px solid var(--line);background:#fbfbfd}
+.phead .lbl{font-size:13px;font-weight:600;letter-spacing:-.005em}
+.phead .lbl i{font-style:normal;color:var(--faint);font-weight:400;margin-left:7px;font-size:11.5px}
+
+.dev{display:flex;gap:3px;margin-left:auto}
+.clamped{margin-left:8px;font-size:11px;font-weight:600;color:#b8860b;background:#fff8e6;
+  border:1px solid #e8d48a;border-radius:5px;padding:3px 8px;white-space:nowrap;line-height:1.3;flex:none}
+.clamped[hidden]{display:none}
+.dev button{appearance:none;border:1px solid var(--line);background:#fff;color:var(--soft);
+  font:inherit;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:6px;cursor:pointer;
+  line-height:1.35;transition:.15s;white-space:nowrap}
+.dev button:hover{border-color:var(--faint);color:var(--ink)}
+.dev button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.dev button b{display:block;font-size:9.5px;font-weight:500;opacity:.72}
+
+select.jump{appearance:none;border:1px solid var(--line);background:#fff
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236e6e73' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")
+  no-repeat right 9px center;
+  color:var(--ink);font:inherit;font-size:12px;padding:5px 26px 5px 10px;border-radius:6px;cursor:pointer}
+
+.frames{flex:1;min-height:0;overflow:auto;background:#e8e8ec;display:flex;justify-content:center;
+  align-items:flex-start;padding:0}
+.frames.pad{padding:18px}
+iframe{border:0;display:block;background:#fff}
+iframe.full{width:100%;height:100%}
+/* ⚠️ 這個 class 不可叫 .dev——會跟頂列的裝置按鈕群組 .dev 撞名，
+   被 @media(max-width:900px){.dev{display:none}} 一起隱藏，原型整片消失。*/
+iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:none}
+
+/* ── 提示條 ── */
+.tip{position:absolute;left:0;right:0;bottom:0;background:rgba(29,29,31,.93);color:#f5f5f7;
+  font-size:12px;line-height:1.5;padding:9px 14px;display:flex;gap:10px;align-items:flex-start;z-index:5}
+.tip b{color:#fff}
+.tip .x{margin-left:auto;cursor:pointer;color:#a1a1a6;font-size:15px;line-height:1;padding:0 2px;flex:none}
+.tip .x:hover{color:#fff}
+.tip[hidden]{display:none}
+
+/* ── 窄螢幕：強制分頁 ── */
+@media(max-width:900px){
+  .bar .ttl small{display:none}
+  body[data-view="split"] .pane.proto{display:none}
+  body[data-view="split"] .seg button[value="split"]{opacity:.4}
+  .phead .dev{display:none}   /* 只隱藏按鈕群組，不要碰 iframe.devw */
+}
+@media(max-width:640px){
+  .bar{gap:10px;padding:0 10px}
+  .bar .ttl{font-size:13px}
+  .seg button{padding:5px 9px;font-size:12px}
+  .phead{padding:0 10px;gap:8px}
+  .phead .lbl i{display:none}
+}
+@media(max-width:420px){
+  .bar .ttl{display:none}
+}
+.note{padding:40px 24px;color:var(--soft);font-size:14px;line-height:1.7;max-width:520px;margin:0 auto}
+.note code{background:#e8e8ec;padding:1px 6px;border-radius:4px;font-size:12.5px}
+
+/* ── 檔案載不到時的說明（預設隱藏；只有真的載不到才出現）── */
+.blank{position:absolute;inset:var(--subh) 0 0;background:#fff;display:flex;align-items:center;
+  justify-content:center;padding:28px;z-index:4}
+.blank[hidden]{display:none}
+.blank .in{max-width:420px}
+.blank h4{margin:0 0 10px;font-size:17px;font-weight:600;color:var(--brand)}
+.blank p{margin:0 0 10px;font-size:14px;line-height:1.7;color:var(--soft)}
+.blank code{background:#f0f0f2;padding:2px 7px;border-radius:5px;font-size:13px;color:var(--ink)}
+.blank ol{margin:10px 0 0;padding-left:20px;font-size:14px;color:var(--soft);line-height:1.75}
+</style>
+</head>
+<body data-view="split">
+
+<div class="bar">
+  <div class="ttl">iPhone 18 專屬頁　需求單 × 原型<small>設計對照用　·　左邊看規格，右邊看實際版位</small></div>
+  <div class="spacer"></div>
+  <div class="seg" role="group" aria-label="檢視模式">
+    <button value="split"  aria-pressed="true">並排</button>
+    <button value="brief"  aria-pressed="false">只看需求單</button>
+    <button value="proto"  aria-pressed="false">只看原型</button>
+  </div>
+</div>
+
+<div class="stage">
+
+  <!-- 需求單 -->
+  <section class="pane brief">
+    <div class="phead">
+      <span class="lbl">需求單<i>image-brief.html</i></span>
+      <select class="jump" id="jumpBrief" aria-label="跳到需求單章節">
+        <option value="">跳到章節…</option>
+        <option value="0">先讀：這頁的圖會被裁切</option>
+        <option value="1">① 六格系列按鈕圖（6 張）</option>
+        <option value="2">② 系列情境 Banner（6 張）</option>
+        <option value="3">③ 組合卡主視覺（30 張）</option>
+        <option value="4">④ 交付方式</option>
+        <option value="5">⑤ 待確認</option>
+      </select>
+    </div>
+    <div class="frames">
+      <iframe id="fBrief" class="full" src="image-brief.html" title="網頁用圖需求單"></iframe>
+    </div>
+    <div class="blank" id="blankBrief" hidden><div class="in">
+      <h4>載不到 image-brief.html</h4>
+      <p>這頁本身不含內容，它是把<b>另外兩個檔案</b>並排顯示的外框，所以三個檔案必須放在<b>同一個資料夾</b>：</p>
+      <p><code>index.html</code>（本檔）<br>
+         <code>image-brief.html</code><br>
+         <code>iphone18-promo-prototype.html</code></p>
+      <ol>
+        <li><b>最省事的做法：直接開線上版</b><br>
+            <a href="https://anita791122.github.io/londonimg-LP/">anita791122.github.io/londonimg-LP/</a>
+            —— 不用下載，永遠是最新的</li>
+        <li>若要用本機檔案：確認三個檔都在同一層資料夾，並<b>雙擊 <code>index.html</code></b> 開啟
+            （不要從郵件或聊天視窗的預覽開）</li>
+      </ol>
+    </div></div>
+  </section>
+
+  <!-- 原型 -->
+  <section class="pane proto">
+    <div class="phead">
+      <span class="lbl">原型<i>iphone18-promo-prototype.html</i></span>
+      <select class="jump" id="jumpProto" aria-label="跳到原型版位">
+        <option value="">跳到版位…</option>
+        <option value="__top">頂端（Hero ＋ 六格按鈕圖 ①）</option>
+        <option value="s1">系列 1　Banner ② ＋ 組合卡 ③</option>
+        <option value="s2">系列 2</option>
+        <option value="s3">系列 3</option>
+        <option value="s4">系列 4</option>
+        <option value="s5">系列 5</option>
+        <option value="s6">系列 6</option>
+      </select>
+      <div class="dev" role="group" aria-label="裝置寬度">
+        <button value="375"  aria-pressed="true">375<b>手機</b></button>
+        <button value="768"  aria-pressed="false">768<b>平板</b></button>
+        <button value="1280" aria-pressed="false">1280<b>桌機</b></button>
+        <button value="full" aria-pressed="false">滿版<b>自適應</b></button>
+      </div>
+      <span class="clamped" id="clamped" hidden></span>
+    </div>
+    <div class="frames pad" id="protoWrap">
+      <iframe id="fProto" class="devw" src="iphone18-promo-prototype.html" title="iPhone 18 專屬頁原型"></iframe>
+    </div>
+
+    <div class="blank" id="blankProto" hidden><div class="in">
+      <h4>載不到 iphone18-promo-prototype.html</h4>
+      <p>請把 <code>iphone18-promo-prototype.html</code> 放到跟本檔<b>同一個資料夾</b>，再雙擊本檔開啟。</p>
+    </div></div>
+
+    <div class="tip" id="tip">
+      <span>💡 <b>裝置寬度會真的改變裁切結果。</b>原型大量使用 <code style="background:rgba(255,255,255,.16);padding:1px 5px;border-radius:4px">vw</code> 單位，在框內是以框寬計算——切到 375 就是真的在看手機版的裁切，不是縮圖。Banner 的比例會從 1.25 一路變到 4.36。</span>
+      <span class="x" id="tipX" role="button" tabindex="0" aria-label="關閉提示">✕</span>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var body=document.body,
+      fProto=document.getElementById('fProto'),
+      fBrief=document.getElementById('fBrief'),
+      wrap=document.getElementById('protoWrap'),
+      PROTO='iphone18-promo-prototype.html',
+      BRIEF='image-brief.html';
+
+  /* ── 檢視模式 ── */
+  var seg=document.querySelector('.seg');
+  seg.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    body.dataset.view=b.value;
+    [].forEach.call(seg.querySelectorAll('button'),function(x){
+      x.setAttribute('aria-pressed', String(x===b));
+    });
+    sizeProto();
+  });
+
+  /* ── 裝置寬度 ── */
+  var devBar=document.querySelector('.dev'), devW='375';
+  devBar.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    devW=b.value;
+    [].forEach.call(devBar.querySelectorAll('button'),function(x){
+      x.setAttribute('aria-pressed', String(x===b));
+    });
+    sizeProto();
+  });
+
+  function sizeProto(){
+    if(devW==='full'){
+      fProto.className='full'; wrap.classList.remove('pad');
+      fProto.style.width=''; fProto.style.height='';
+      document.getElementById('clamped').hidden=true;
+      return;
+    }
+    fProto.className='devw'; wrap.classList.add('pad');
+    var avail=wrap.clientWidth-36;                 /* 扣掉 padding */
+    var want=parseInt(devW,10);
+    var w=Math.min(want, Math.max(320, avail));
+    fProto.style.width=w+'px';
+    fProto.style.height=Math.max(400, wrap.clientHeight-36)+'px';
+    /* 視窗不夠寬時會被夾住——講出來，不要讓按鈕標示與實際寬度默默不一致 */
+    var c=document.getElementById('clamped');
+    if(w<want){ c.hidden=false; c.textContent='⚠ 視窗不夠寬，實際 '+w+'px'; }
+    else { c.hidden=true; }
+  }
+  window.addEventListener('resize',sizeProto);
+
+  /* ── 跳轉：改 src 的 hash，跨來源也有效 ── */
+  document.getElementById('jumpProto').addEventListener('change',function(){
+    var v=this.value; if(!v) return;
+    fProto.src = PROTO + (v==='__top' ? '' : '#'+v);
+    this.selectedIndex=0;
+  });
+
+  /* 需求單章節：優先用同來源捲動，被擋就退回 hash */
+  var H=['#h0','#h1','#h2','#h3','#h4','#h5'];
+  document.getElementById('jumpBrief').addEventListener('change',function(){
+    var i=this.value; if(i==='') return;
+    this.selectedIndex=0;
+    try{
+      var d=fBrief.contentDocument;
+      if(d){
+        var hs=d.querySelectorAll('h2');
+        if(hs[i]){ hs[i].scrollIntoView({block:'start'}); return; }
+      }
+    }catch(err){}
+    fBrief.src = BRIEF + H[i];   /* 跨來源時的退路 */
+  });
+
+  /* ── 提示條 ── */
+  var tip=document.getElementById('tip');
+  function hide(){ tip.hidden=true; }
+  document.getElementById('tipX').addEventListener('click',hide);
+  document.getElementById('tipX').addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();hide();}
+  });
+
+  /* 窄螢幕開場改成分頁 */
+  if(window.matchMedia('(max-width:900px)').matches){
+    body.dataset.view='brief';
+    seg.querySelector('[value="split"]').setAttribute('aria-pressed','false');
+    seg.querySelector('[value="brief"]').setAttribute('aria-pressed','true');
+  }
+
+  /* ── 載入偵測：載不到就明講，不要留兩片空白 ──
+     （典型情況：只收到這一個檔案、或從郵件預覽開啟）*/
+  function loaded(f){
+    try{
+      var d=f.contentDocument;
+      if(!d) return true;                        /* 跨來源＝擋住讀取，但畫面有東西，視為正常 */
+      if(d.location.href==='about:blank') return false;
+      return !!(d.body && d.body.children.length>0);
+    }catch(e){ return true; }                    /* 同上：讀不到不代表沒載入 */
+  }
+  function check(){
+    document.getElementById('blankBrief').hidden = loaded(fBrief);
+    document.getElementById('blankProto').hidden = loaded(fProto);
+  }
+  fBrief.addEventListener('load',check);
+  fProto.addEventListener('load',check);
+  setTimeout(check,1200);                        /* 兜底：連 load 都沒觸發的情況 */
+
+  sizeProto();
+  window.addEventListener('load',function(){ sizeProto(); check(); });
+})();
+</script>
+</body>
+</html>
