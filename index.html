@@ -127,11 +127,13 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
       <select class="jump" id="jumpBrief" aria-label="跳到需求單章節">
         <option value="">跳到章節…</option>
         <option value="0">先讀：這頁的圖會被裁切</option>
-        <option value="1">① 六格系列按鈕圖（6 張）</option>
-        <option value="2">② 系列情境 Banner（6 張）</option>
+        <option value="1">① 六格系列按鈕圖（12 張）</option>
+        <option value="2">② 系列情境 Banner（12 張）</option>
         <option value="3">③ 組合卡主視覺（30 張）</option>
         <option value="4">④ 交付方式</option>
-        <option value="5">⑤ 待確認</option>
+        <option value="5">⑤ 人物：可用 AI 生成</option>
+        <option value="6">⑥ 時程（8/24）</option>
+        <option value="7">⑦ 待確認</option>
       </select>
     </div>
     <div class="frames">
@@ -145,7 +147,7 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
          <code>iphone18-promo-prototype.html</code></p>
       <ol>
         <li><b>最省事的做法：直接開線上版</b><br>
-            <a href="https://anita791122.github.io/londonimg-LP/">anita791122.github.io/londonimg-LP/</a>
+            <a href="https://anita791122.github.io/londonimg-LP/" target="_blank" rel="noopener noreferrer">anita791122.github.io/londonimg-LP/</a>
             —— 不用下載，永遠是最新的</li>
         <li>若要用本機檔案：確認三個檔都在同一層資料夾，並<b>雙擊 <code>index.html</code></b> 開啟
             （不要從郵件或聊天視窗的預覽開）</li>
@@ -294,9 +296,27 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
     document.getElementById('blankBrief').hidden = loaded(fBrief);
     document.getElementById('blankProto').hidden = loaded(fProto);
   }
-  fBrief.addEventListener('load',check);
-  fProto.addEventListener('load',check);
-  setTimeout(check,1200);                        /* 兜底：連 load 都沒觸發的情況 */
+  /* ── 讓框內的「外部連結」改在新分頁開 ──
+     不加這個，點連結會讓 iframe 自己去載那個站；而 Pinterest／LINE 都送
+     X-Frame-Options: SAMEORIGIN，拒絕被嵌入 → 畫面一片空白，看起來像連結壞掉。
+     原型檔不修改（維持單一來源），所以在外殼這邊補。
+     ⚠️ 只處理跨站連結；#s1 這類同頁錨點必須留在框內，那是跳轉功能。*/
+  function externalizeLinks(f){
+    try{
+      var d=f.contentDocument; if(!d) return;          /* 跨來源＝改不了，也不需要改 */
+      var here=location.origin;
+      d.querySelectorAll('a[href]').forEach(function(a){
+        var h=a.getAttribute('href')||'';
+        if(!/^https?:/i.test(h)) return;               /* #錨點、相對路徑 → 不動 */
+        if(a.href.indexOf(here)===0) return;           /* 同站 → 不動 */
+        a.target='_blank'; a.rel='noopener noreferrer';
+      });
+    }catch(e){}
+  }
+  function onFrameLoad(f){ return function(){ check(); externalizeLinks(f); }; }
+  fBrief.addEventListener('load',onFrameLoad(fBrief));
+  fProto.addEventListener('load',onFrameLoad(fProto));
+  setTimeout(function(){ check(); externalizeLinks(fBrief); externalizeLinks(fProto); },1200);                        /* 兜底：連 load 都沒觸發的情況 */
 
   sizeProto();
   window.addEventListener('load',function(){ sizeProto(); check(); });
