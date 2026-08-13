@@ -187,6 +187,13 @@ h1 span{color:inherit}
 .oc::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(104deg,rgba(255,255,255,.78) 0%,rgba(255,255,255,.52) 34%,
     rgba(255,255,255,.14) 52%,rgba(255,255,255,0) 64%)}
+/* ⚠️ 部分素材的手機主體偏中偏左，會頂到左上角的文字。
+   桌機卡片比例 1.333 與素材 800×600 完全相同 → cover 不裁切，
+   background-position 在這個版位「完全無效」，推不動畫面。
+   所以改為加強白霧。只加在需要的卡上，避免把構圖乾淨的卡也洗白。
+   素材換成符合「主體放右側 67–92%」的版本後，把 wash-strong 拿掉即可。 */
+.oc.wash-strong::before{background:linear-gradient(104deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.88) 30%,rgba(255,255,255,.62) 46%,rgba(255,255,255,.24) 58%,rgba(255,255,255,0) 70%)}
+
 /* 文字層：疊在圖的前面（z-index 高於圖與柔光罩），限寬在手機左邊的留白區 */
 .oc-tx{position:absolute;z-index:2;top:0;left:0;max-width:80%;
   padding:12px 4px 0 12px;color:var(--ink)}
@@ -921,7 +928,7 @@ const FREE=599;
 
 /* 6 格總覽 */
 document.getElementById('ovg').innerHTML=S.map(s=>`
-<a class="oc" href="#${s.id}" aria-label="${s.ovH}"
+<a class="oc${["s2","s5","s6"].indexOf(s.id)>=0?" wash-strong":""}" href="#${s.id}" aria-label="${s.ovH}"
    style="--g1:${s.g1};--g2:${s.g2};--g3:${s.g3};background-image:url(${ORB[s.person]})">
   <span class="oc-tx">
     ${s.badge?`<span class="oc-bd">${s.badge}</span>`:''}
