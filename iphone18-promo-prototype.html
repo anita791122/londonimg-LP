@@ -554,16 +554,17 @@ const S=[
   n:        "新機必備",                                   // 影片標題左半，格式是「n｜sub 實測」
   sub:      "強效防摔 極地冰岩殼",                        // 影片標題右半，也當商品圖的圖片說明
 
-  /* ── ⑤ 免運與「只買殼」 ── */
-  noSolo:   true,                                         // true＝這款沒有「只買殼」選項（買殼就送貼）。不寫就是有
-  t1:       "NT$490",                                     // ①雙重防護組的價格。填真數字才算得出「還差 $X 免運」
-  soloWas:  "",                                            // 只買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
+  /* ── ⑤ 免運與「單買殼」 ── */
+  noSolo:   true,                                         // true＝這款沒有「單買殼」選項（買殼就送貼）。不寫就是有
+  t1:       "NT$490",                                     // ①單買殼的價格。填真數字才算得出「還差 $X 免運」
+  soloWas:  "",                                            // 單買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
+  names:    ["單買殼（送玻璃貼）","","","",""],         // ①②③④⑤ 各自的組合名稱；留空＝用 BUNDLES 的預設名
   /* ── ⑤ 五張組合卡的價格（①②③④⑤ 依序）──────────────────────
      ⚠️ 這是你要填真實定價的地方。留 "" 的就繼續顯示 NT$◯,◯◯◯ 佔位，
         可以一個系列一個系列慢慢填，不用一次到位。
      ⚠️ 格式一定要寫成 "NT$1,090"（含 NT$ 與千分位逗號），程式才認得出是數字。
      💡 省額不用填——程式用「原價 − 現價」自己算，改價格時不會忘記改省額。 */
-  prices:  ["NT$490",   // ① 雙重防護組
+  prices:  ["NT$490",   // ① 單買殼（本款 ① 改名，見上面 names）
             "NT$999",   // ② 三重防護組
             "",   // ③ 風格搭配組
             "",   // ④ 隨身實用組
@@ -577,7 +578,7 @@ const S=[
   /* ── ⑥ 目前沒有顯示在頁面上　留著備用，改了不會有任何變化 ──
      ⚠️ bdName／acc 描述的是「二件組」＝① 雙重防護組，所以貼要跟 ① 一致；
         但它們沒有渲染到畫面，改 films 不會自動跟著變 → 只能手動同步。 */
-  giftNote: "本款<b>買殼就送玻璃貼</b>，所以沒有「只買殼」這個選項——最低就是這一組。",
+  giftNote: "本款<b>買殼就送玻璃貼</b>，所以沒有「單買殼」這個選項——最低就是這一組。",
   bd:       "GG07",
   bdName:   "極地冰岩殼 ＋ 玻璃貼｜二件組",
   bdPrice:  840,
@@ -620,9 +621,9 @@ const S=[
   n:        "人氣款",                                     // 影片標題左半，格式是「n｜sub 實測」
   sub:      "360° 支架指環殼",                           // 影片標題右半，也當商品圖的圖片說明
 
-  /* ── ⑤ 免運與「只買殼」 ── */
+  /* ── ⑤ 免運與「單買殼」 ── */
   t1:       "NT$590",                                  // ①雙重防護組的價格。填真數字才算得出「還差 $X 免運」
-  soloWas:  "NT$790",                                            // 只買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
+  soloWas:  "NT$790",                                            // 單買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
   /* ── ⑤ 五張組合卡的價格（①②③④⑤ 依序）──────────────────────
      ⚠️ 這是你要填真實定價的地方。留 "" 的就繼續顯示 NT$◯,◯◯◯ 佔位，
         可以一個系列一個系列慢慢填，不用一次到位。
@@ -638,8 +639,8 @@ const S=[
             "",   // ③
             "",   // ④
             ""],  // ⑤
-  soloPrice: "NT$490~590",                                // 只買殼的價格文字。不寫的話程式用 price 自動產生
-  soloShort: "未達免運（差 $9–109）",                    // 只買殼那張卡的免運說明
+  soloPrice: "NT$490~590",                                // 單買殼的價格文字。不寫的話程式用 price 自動產生
+  soloShort: "未達免運（差 $9–109）",                    // 單買殼那張卡的免運說明
   gapText:  "$9–109",                                    // 「還差多少」的文字。不寫就用 599 − price 自動算
 
   /* ── ⑥ 目前沒有顯示在頁面上　留著備用，改了不會有任何變化 ──
@@ -688,9 +689,9 @@ const S=[
   n:        "抗UV 透明",                                  // 影片標題左半，格式是「n｜sub 實測」
   sub:      "明岳透明殼",                                 // 影片標題右半，也當商品圖的圖片說明
 
-  /* ── ⑤ 免運與「只買殼」 ── */
+  /* ── ⑤ 免運與「單買殼」 ── */
   t1:       "NT$590",                                  // ①雙重防護組的價格。填真數字才算得出「還差 $X 免運」
-  soloWas:  "NT$690",                                            // 只買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
+  soloWas:  "NT$690",                                            // 單買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
   /* ── ⑤ 五張組合卡的價格（①②③④⑤ 依序）──────────────────────
      ⚠️ 這是你要填真實定價的地方。留 "" 的就繼續顯示 NT$◯,◯◯◯ 佔位，
         可以一個系列一個系列慢慢填，不用一次到位。
@@ -753,9 +754,9 @@ const S=[
   n:        "零手感",                                     // 影片標題左半，格式是「n｜sub 實測」
   sub:      "0.8 Lite 極薄",                              // 影片標題右半，也當商品圖的圖片說明
 
-  /* ── ⑤ 免運與「只買殼」 ── */
+  /* ── ⑤ 免運與「單買殼」 ── */
   t1:       "NT$490~590",                                  // ①雙重防護組的價格。填真數字才算得出「還差 $X 免運」
-  soloWas:  "NT$690",                                            // 只買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
+  soloWas:  "NT$690",                                            // 單買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
   /* ── ⑤ 五張組合卡的價格（①②③④⑤ 依序）──────────────────────
      ⚠️ 這是你要填真實定價的地方。留 "" 的就繼續顯示 NT$◯,◯◯◯ 佔位，
         可以一個系列一個系列慢慢填，不用一次到位。
@@ -819,9 +820,9 @@ const S=[
   n:        "磨砂超薄",                                   // 影片標題左半，格式是「n｜sub 實測」
   sub:      "Air Lite 磨砂",                              // 影片標題右半，也當商品圖的圖片說明
 
-  /* ── ⑤ 免運與「只買殼」 ── */
+  /* ── ⑤ 免運與「單買殼」 ── */
   t1:       "NT$490",                                  // ①雙重防護組的價格。填真數字才算得出「還差 $X 免運」
-  soloWas:  "NT$690",                                            // 只買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
+  soloWas:  "NT$690",                                            // 單買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
   /* ── ⑤ 五張組合卡的價格（①②③④⑤ 依序）──────────────────────
      ⚠️ 這是你要填真實定價的地方。留 "" 的就繼續顯示 NT$◯,◯◯◯ 佔位，
         可以一個系列一個系列慢慢填，不用一次到位。
@@ -885,9 +886,9 @@ const S=[
   n:        "皮革",                                       // 影片標題左半，格式是「n｜sub 實測」
   sub:      "YU 皮革 MagSafe",                            // 影片標題右半，也當商品圖的圖片說明
 
-  /* ── ⑤ 免運與「只買殼」 ── */
+  /* ── ⑤ 免運與「單買殼」 ── */
   t1:       "NT$490",                                  // ①雙重防護組的價格。填真數字才算得出「還差 $X 免運」
-  soloWas:  "NT$590",                                            // 只買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
+  soloWas:  "NT$590",                                            // 單買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
   /* ── ⑤ 五張組合卡的價格（①②③④⑤ 依序）──────────────────────
      ⚠️ 這是你要填真實定價的地方。留 "" 的就繼續顯示 NT$◯,◯◯◯ 佔位，
         可以一個系列一個系列慢慢填，不用一次到位。
@@ -964,11 +965,19 @@ const BUNDLES=[
   desc:"新機拆封當下就用得到的全部", flag:"", anchor:true}
 ];
 
+/* 組合名稱可以逐系列覆蓋：先看該系列的 names[第幾組]，沒填才用上面 BUNDLES 的預設名。
+   （跟 films 覆蓋保護貼名稱是同一套寫法）
+   ⚠️ 目前唯一的例外是極地冰岩殼的 ①——本款買殼就送貼、沒有另一張「單買殼」卡，
+      ① 的價格就等於單買一個殼（490），所以那張卡叫「單買殼（送玻璃貼）」而不是「雙重防護組」。
+      括號要留著：其他五個系列的「單買殼」是真的只有殼，本款多了一張送的貼，
+      不寫出來兩邊同名不同內容，客人會以為別的系列也送。 */
+const bName = (s,b,bi) => (s.names && s.names[bi]) || b.name;
+
 /* 把 "NT$1,090" 這種文字轉成數字 1090；填的是 ◯ 佔位就回 null（代表「還沒定價」） */
 const num = t => (typeof t==="string" && /^NT\$[\d,]+$/.test(t)) ? +t.replace(/[^\d]/g,"") : null;
 
 /* 把價格拆成 [最低, 最高]：
-   ·"NT$490~590" 這種區間 → [490, 590]（只買殼的價格會隨機型不同而是區間）
+   ·"NT$490~590" 這種區間 → [490, 590]（單買殼的價格會隨機型不同而是區間）
    ·"NT$1,090" 單一價     → [1090, 1090]
    ·還是 ◯ 佔位          → null
    分隔號 ~ – - 三種都吃，免得手打不一致就失效。 */
@@ -1009,7 +1018,7 @@ function kitLabel(s,k,short,bi){
     case "case":   return [s.caseName, ""];
     /* 保護貼可以逐組不同：先看該系列的 films[第幾組]，沒填才用 filmName。
        ⚠️ 目前唯一的例外是極地冰岩殼的 ①（買殼送的是玻璃貼，其餘組合都配冰盾貼）。
-       bi 在「只買殼」那張卡是 undefined，但它的內容物只有殼、不會走到這裡。 */
+       bi 在「單買殼」那張卡是 undefined，但它的內容物只有殼、不會走到這裡。 */
     case "screen": return [(s.films && s.films[bi]) || s.filmName, ""];
     case "lens":   return ["鏡頭貼", ""];
     case "charm":  return [short?"J/arch. 掛飾":"J/arch. 掛飾／手腕繩／斜背鏈", "可挑款"];
@@ -1032,16 +1041,16 @@ document.getElementById('series').innerHTML=S.map(s=>{
  const gap=FREE-s.price;
  const nm="bundle-"+s.id;
 
- /* ⓪ 只買殼——某些系列「買殼就送貼」，本來就沒有單殼選項（s.noSolo） */
+ /* ⓪ 單買殼——某些系列「買殼就送貼」，本來就沒有單殼選項（s.noSolo） */
  const soloPrice = s.soloPrice || `NT$${s.price.toLocaleString()}`;
  const soloShort = s.soloShort || `還差 $${gap} 免運`;
  const soloOpt = s.noSolo ? "" : `
   <label class="opt osolo">
-    <input type="radio" name="${nm}" value="solo" data-price="NT$${s.price.toLocaleString()}" data-label="只買殼">
+    <input type="radio" name="${nm}" value="solo" data-price="NT$${s.price.toLocaleString()}" data-label="單買殼">
     <span class="tick"></span>
     <span class="othumb"><img src="${pic(s.img)}" alt="${s.sub}" loading="lazy"></span>
     <span class="obody">
-      <span class="oname">只買殼</span>
+      <span class="oname">單買殼</span>
       <span class="okit">${kitRows(s,["case"],true)}</span>
     </span>
       <span class="oprow">
@@ -1067,7 +1076,7 @@ document.getElementById('series').innerHTML=S.map(s=>{
  let firstFree = -1;
  for (let i=0;i<BUNDLES.length;i++){ if(isFree(i)){ firstFree=i; break; } }
  const firstFreeLabel = firstFree>=0
-   ? `${BUNDLES[firstFree].step} ${BUNDLES[firstFree].name}` : "";
+   ? `${BUNDLES[firstFree].step} ${bName(s,BUNDLES[firstFree],firstFree)}` : "";
  /* 免運線的視覺呈現已改由每張卡上的 .bfree 標籤承擔（v3 改卡片版後 .fline 就沒再插進 DOM）*/
 
  /* 已移除：v3 改卡片版後 optArr（radio 選擇器版）就沒再插進 DOM */
@@ -1102,18 +1111,18 @@ document.getElementById('series').innerHTML=S.map(s=>{
     <div class="bwrap">
       <div class="brow" id="brow-${s.id}">
         ${(s.noSolo?[]:[(function(){
-            /* 只買殼也要有「原價 → 現價 → 省額」三件套，跟組合卡同一套算法。
+            /* 單買殼也要有「原價 → 現價 → 省額」三件套，跟組合卡同一套算法。
                soloWas 沒填就顯示 NT$◯,◯◯◯ 佔位，省額同樣算不出來就顯示 省 $◯◯◯。
                ⚠️ 360° 支架的 soloPrice 是區間（NT$490~590），算不出單一數字 → 自動退回佔位，正確。 */
             const sWas = s.soloWas || yenW;
-            return {n:"只買殼",has:["case"],solo:true,pr:soloPrice,was:sWas,save:saveOf(soloPrice,sWas),
+            return {n:"單買殼",has:["case"],solo:true,pr:soloPrice,was:sWas,save:saveOf(soloPrice,sWas),
                     t:s.sub,free:false,gapTxt:s.gapText||("$"+gap)};
           })()])
           .concat(BUNDLES.map(function(b,bi){
             /* 價格來源：該系列的 prices[第幾組]；沒填就退回佔位，可以一個系列一個系列慢慢填 */
             const now = P[bi] || (bi===0 ? (s.t1||yen3) : yen);
             const was = W[bi] || yenW;
-            return {n:b.step+" "+b.name,has:b.has,solo:false,
+            return {n:b.step+" "+bName(s,b,bi),has:b.has,solo:false,
             pr:now, was:was, save:saveOf(now,was),
             free:isFree(bi),
             gapTxt:"$"+(FREE-(bundleNum(bi)!==null?bundleNum(bi):t1Num)),
