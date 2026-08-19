@@ -630,10 +630,17 @@ const S=[
         可以一個系列一個系列慢慢填，不用一次到位。
      ⚠️ 格式一定要寫成 "NT$1,090"（含 NT$ 與千分位逗號），程式才認得出是數字。
      💡 省額不用填——程式用「原價 − 現價」自己算，改價格時不會忘記改省額。 */
+  /* ⚠️ 本系列不顯示 ④ 隨身實用組：360° 支架指環殼本身已內建支架，
+        再配一個 MagSafe 磁吸支架是重複的（原本靠卡片上一行「本款已內建支架」
+        的註腳硬撐，等於自己承認這一組對這個系列不成立）。
+        數字是「第幾組」由 0 起算：0=① 1=② 2=③ 3=④ 4=⑤。
+        prices／wasList 的位置不要跟著移動——它們仍照 ①②③④⑤ 對號入座。 */
+  hideBundles: [3],
+
   prices:  ["NT$940",   // ① 雙重防護組
             "NT$1,299",   // ② 三重防護組
             "",   // ③ 風格搭配組
-            "",   // ④ 隨身實用組
+            "",   // ④ 隨身實用組（已隱藏，填了也不會顯示）
             ""],  // ⑤ 開箱即用組
   wasList: ["NT$1,480",   // ① 原價（刪除線）
             "NT$2,070",   // ②
@@ -942,6 +949,8 @@ document.getElementById('ovg').innerHTML=S.map(s=>`
 
 /* ── 五組組合 ──
    ①②⑤ 在一條升級線上；③④ 是同一階的兩個分岔（風格 vs 實用）。
+   ⚠️ 不是每個系列都五組都有：系列可以用 hideBundles 拿掉不適合自己的那一組
+      （例：360° 支架指環殼已內建支架，④ 隨身實用組對它是重複的 → 已隱藏）。
    呈現方式＝電商標準的「可選取商品列」：縮圖＋選取圓鈕＋內容物圖示＋省額＋單一主 CTA。 */
 const ITEMS={
  case:  {ic:"i-case",   lb:"殼"},
@@ -1025,6 +1034,9 @@ function kitLabel(s,k,short,bi){
     case "lens":   return ["鏡頭貼", ""];
     case "charm":  return [short?"J/arch. 掛飾":"J/arch. 掛飾／手腕繩／斜背鏈", "可挑款"];
     case "clip":   return [short?"金屬夾片":"金屬手機夾片", ""];
+    /* ⚠️ 下面的 B67 分支目前是「用不到的分支」——360° 支架指環殼（B67）已用
+       hideBundles 把 ④ 整組拿掉，不會再有卡片走進 mag 這一支。
+       留著是因為 ④ 若哪天恢復，這句註腳還是對的。 */
     case "mag":    return s.sku==="B67"
                         ? ["MagSafe 磁吸卡夾", short?"已內建支架":"本款已內建支架"]
                         : [short?"MagSafe 磁吸":"MagSafe 磁吸支架／卡夾", "可挑款"];
@@ -1064,6 +1076,8 @@ document.getElementById('series').innerHTML=S.map(s=>{
 
  /* ①雙重防護組的價格：優先讀 prices[0]，沒填才退回舊欄位 t1 */
  const P = s.prices || [], W = s.wasList || [];
+ /* 這個系列要藏起來的組合（0 起算）。空陣列＝五組都顯示 */
+ const HIDE = s.hideBundles || [];
  const t1Num = num(P[0] || s.t1);
  const lineAfter = (t1Num!==null && t1Num<FREE) ? 1 : 0;   // 0＝在①之前；1＝在①之後
 
@@ -1077,7 +1091,7 @@ document.getElementById('series').innerHTML=S.map(s=>{
 
  /* 第一個免運的是第幾組（0＝①）。全部都沒跨過就是 -1。 */
  let firstFree = -1;
- for (let i=0;i<BUNDLES.length;i++){ if(isFree(i)){ firstFree=i; break; } }
+ for (let i=0;i<BUNDLES.length;i++){ if(HIDE.includes(i)) continue; if(isFree(i)){ firstFree=i; break; } }
  const firstFreeLabel = firstFree>=0
    ? `${BUNDLES[firstFree].step} ${bName(s,BUNDLES[firstFree],firstFree)}` : "";
  /* 免運線的視覺呈現已改由每張卡上的 .bfree 標籤承擔（v3 改卡片版後 .fline 就沒再插進 DOM）*/
@@ -1107,7 +1121,7 @@ document.getElementById('series').innerHTML=S.map(s=>{
             六個系列用同一個句型，客人一眼就能比較「這個系列的免運線比較前面」。 -->
     <p class="p3"><span class="pic">${icon("i-truck")}</span><span>${
         firstFree>=0 ? `<b>${firstFreeLabel}</b>起免運`
-                     : `<b>五組都未達免運門檻</b>` }</span></p>
+                     : `<b>所有組合都未達免運門檻</b>` }</span></p>
   </div>
 
   <div class="inner">
@@ -1129,7 +1143,10 @@ document.getElementById('series').innerHTML=S.map(s=>{
             pr:now, was:was, save:saveOf(now,was),
             free:isFree(bi),
             gapTxt:"$"+(FREE-(bundleNum(bi)!==null?bundleNum(bi):t1Num)),
-            t:b.desc, flag:b.flag, i:bi};}))
+            t:b.desc, flag:b.flag, i:bi};})
+            /* ⚠️ 一定要「先 map 再 filter」：bi 是 prices／wasList 的索引，
+               先 filter 會讓後面每一組的索引往前位移、價格全部對錯人。 */
+            .filter(function(c){ return !HIDE.includes(c.i); }))
           .map(function(c,i){return `
         <a class="bcard${c.flag?' pick':''}" href="#">
           <span class="bphoto" style="background-image:url('${pic(c.solo?s.img:bImg(s,c.i))}')"></span>
