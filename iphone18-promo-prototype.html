@@ -445,6 +445,7 @@ h1 span{color:inherit}
 <symbol id="i-screen" viewBox="0 0 24 24"><path d="M12 2.6 19.5 6v5.6c0 4.7-3.2 8-7.5 9.7-4.3-1.7-7.5-5-7.5-9.7V6z"/><path d="m9 12 2.2 2.2L15.4 10"/></symbol>
 <symbol id="i-lens" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="3.1"/></symbol>
 <symbol id="i-charm" viewBox="0 0 24 24"><path d="M9 3.2h6M12 3.2v5"/><circle cx="12" cy="14.5" r="5.6"/><path d="M12 12v5"/></symbol>
+<symbol id="i-clip" viewBox="0 0 24 24"><rect x="3.4" y="6.6" width="17.2" height="10.8" rx="2.6"/><rect x="7" y="10.4" width="10" height="3.2" rx="1.6"/></symbol>
 <symbol id="i-mag" viewBox="0 0 24 24"><path d="M6 3.5v8.7a6 6 0 0 0 12 0V3.5h-4v8.7a2 2 0 0 1-4 0V3.5z"/><path d="M6 8h4M14 8h4"/></symbol>
 <symbol id="i-power" viewBox="0 0 24 24"><path d="M13.2 2.4 4.6 13.6h6.4l-1.2 8 8.6-11.2h-6.4z"/></symbol>
 <symbol id="i-clean" viewBox="0 0 24 24"><path d="M12 3.2s5.6 6.3 5.6 9.8a5.6 5.6 0 1 1-11.2 0c0-3.5 5.6-9.8 5.6-9.8z"/></symbol>
@@ -947,6 +948,7 @@ const ITEMS={
  screen:{ic:"i-screen", lb:"螢幕貼"},
  lens:  {ic:"i-lens",   lb:"鏡頭貼"},
  charm: {ic:"i-charm",  lb:"掛飾"},
+ clip:  {ic:"i-clip",   lb:"夾片"},
  mag:   {ic:"i-mag",    lb:"磁吸"},
  power: {ic:"i-power",  lb:"線＋頭"},
  clean: {ic:"i-clean",  lb:"清潔"}
@@ -957,8 +959,8 @@ const BUNDLES=[
   desc:"殼 ＋ 螢幕保護貼", flag:""},
  {step:"②", name:"三重防護組", has:["case","screen","lens"],
   desc:"三個最容易壞的面一次補齊", flag:"最多人選", pick:true},
- {step:"③", name:"風格搭配組", has:["case","screen","lens","charm"],
-  desc:"＋ J/arch. 掛飾，款式自選", flag:""},
+ {step:"③", name:"風格搭配組", has:["case","screen","lens","charm","clip"],
+  desc:"＋ J/arch. 掛飾（款式自選）與金屬手機夾片", flag:""},
  {step:"④", name:"隨身實用組", has:["case","screen","lens","mag"],
   desc:"＋ MagSafe 磁吸配件", flag:""},
  {step:"⑤", name:"開箱即用組", has:["case","screen","lens","power","clean"],
@@ -1022,6 +1024,7 @@ function kitLabel(s,k,short,bi){
     case "screen": return [(s.films && s.films[bi]) || s.filmName, ""];
     case "lens":   return ["鏡頭貼", ""];
     case "charm":  return [short?"J/arch. 掛飾":"J/arch. 掛飾／手腕繩／斜背鏈", "可挑款"];
+    case "clip":   return [short?"金屬夾片":"金屬手機夾片", ""];
     case "mag":    return s.sku==="B67"
                         ? ["MagSafe 磁吸卡夾", short?"已內建支架":"本款已內建支架"]
                         : [short?"MagSafe 磁吸":"MagSafe 磁吸支架／卡夾", "可挑款"];
