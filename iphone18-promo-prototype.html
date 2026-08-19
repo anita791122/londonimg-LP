@@ -1032,7 +1032,14 @@ function kitLabel(s,k,short,bi){
        bi 在「單買殼」那張卡是 undefined，但它的內容物只有殼、不會走到這裡。 */
     case "screen": return [(s.films && s.films[bi]) || s.filmName, ""];
     case "lens":   return ["鏡頭貼", ""];
-    case "charm":  return [short?"J/arch. 掛飾":"J/arch. 掛飾／手腕繩／斜背鏈", "可挑款"];
+    /* ⚠️ 卡片版刻意拿掉品牌前綴「J/arch.」——不是漏寫。
+       ③ 加了金屬夾片之後這一列會擠到把「可挑款」徽章推到第二行，整列 22px→45px，
+       而卡片是等高的，六個系列每一張都跟著長高。拿掉品牌剛好收回同一行。
+       ⚠️ 桌機的餘裕只剩 2px（卡片桌機 260px 比手機 300px 還窄），
+          要再加字進來之前先量，別憑感覺。手機餘裕 42px。
+       ⚠️ 上面 BUNDLES ③ 的 desc 仍寫著 J/arch.——那個欄位沒有渲染到畫面，
+          留著當完整的品項紀錄，不是漏改。 */
+    case "charm":  return [short?"J/arch. 掛飾":"掛飾／手腕繩／斜背鏈", "可挑款"];
     case "clip":   return [short?"金屬夾片":"金屬手機夾片", ""];
     /* ⚠️ 下面的 B67 分支目前是「用不到的分支」——360° 支架指環殼（B67）已用
        hideBundles 把 ④ 整組拿掉，不會再有卡片走進 mag 這一支。
