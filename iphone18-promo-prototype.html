@@ -548,29 +548,35 @@ const S=[
   /* ── ④ 商品資料 ── */
   sku:      "K50s",                                       // 商品編號。只有 B67 會被程式特別判斷（磁吸那項的文案）
   filmName: "極地冰盾貼",                                 // 這個系列「預設」的保護貼（各組可用下面的 films 個別覆蓋）
-  films:    ["玻璃貼","","","",""],                     // ①②③④⑤ 各自的貼；留空＝用上面的 filmName
+  films:    ["","","","",""],                           // ①②③④⑤ 各自的貼；留空＝用上面的 filmName
   price:    490,                                          // 單買一個殼的價格。用來算「還差多少免運」
   img:      "62906ec96d2fc5002a7a1ca0",                   // 主圖，SHOPLINE 媒體庫的圖片 ID
   accImg:   "6881bed8490777000aa2bdfc",                   // 第二張圖（組合卡輪到第二張時用）
   n:        "新機必備",                                   // 影片標題左半，格式是「n｜sub 實測」
   sub:      "強效防摔 極地冰岩殼",                        // 影片標題右半，也當商品圖的圖片說明
 
-  /* ── ⑤ 免運與「單買殼」 ── */
-  noSolo:   true,                                         // true＝這款沒有「單買殼」選項（買殼就送貼）。不寫就是有
-  t1:       "NT$490",                                     // ①單買殼的價格。填真數字才算得出「還差 $X 免運」
-  soloWas:  "",                                            // 單買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
-  names:    ["單買殼（送玻璃貼）","","","",""],         // ①②③④⑤ 各自的組合名稱；留空＝用 BUNDLES 的預設名
+  /* ── ⑤ 免運與「單買殼」 ──
+     ⚠️ 2026-08-24：本款原本設 noSolo:true、並把 ① 改名成「單買殼（送玻璃貼）」，
+        結果整個系列只有 5 張卡、少了「雙重防護組」，跟需求單（s1-1 單買殼／s1-2 雙重防護組）
+        與 35 個商品頁檔（s1-1～s1-6）都對不起來。已改回正規的六張卡。
+        兩者的差別是**貼的等級**：單買殼送的是一般玻璃貼，① 以上配極地冰盾貼。 */
+  soloName: "單買殼（送玻璃貼）",                          // 單買殼卡的名稱。不寫就是「單買殼」
+  soloHas:  ["case","screen"],                            // 單買殼卡的內容物。不寫就是只有殼
+  soloFilm: "玻璃貼",                                     // 單買殼那張卡的貼（跟 films 是同一套寫法，只是給單買殼用）
+  t1:       "",                                           // ①雙重防護組的價格（prices[0] 沒填時的退路）。⚠️ 待填真實定價
+  soloWas:  "NT$590",                                      // 單買殼的原價（刪除線）。留空＝顯示 NT$◯,◯◯◯ 佔位
+  names:    ["","","","",""],                             // ①②③④⑤ 各自的組合名稱；留空＝用 BUNDLES 的預設名
   /* ── ⑤ 五張組合卡的價格（①②③④⑤ 依序）──────────────────────
      ⚠️ 這是你要填真實定價的地方。留 "" 的就繼續顯示 NT$◯,◯◯◯ 佔位，
         可以一個系列一個系列慢慢填，不用一次到位。
      ⚠️ 格式一定要寫成 "NT$1,090"（含 NT$ 與千分位逗號），程式才認得出是數字。
      💡 省額不用填——程式用「原價 − 現價」自己算，改價格時不會忘記改省額。 */
-  prices:  ["NT$490",   // ① 單買殼（本款 ① 改名，見上面 names）
+  prices:  ["",   // ① 雙重防護組　⚠️ 待填：原本這格放的是單買殼的 490，已移到上面的 price／soloWas
             "NT$999",   // ② 三重防護組
             "",   // ③ 風格搭配組
             "",   // ④ 隨身實用組
             ""],  // ⑤ 開箱即用組
-  wasList: ["NT$590",   // ① 原價（刪除線）
+  wasList: ["",   // ① 原價（刪除線）　⚠️ 待填，原本的 590 已移到 soloWas
             "NT$1,870",   // ②
             "",   // ③
             "",   // ④
@@ -579,7 +585,7 @@ const S=[
   /* ── ⑥ 目前沒有顯示在頁面上　留著備用，改了不會有任何變化 ──
      ⚠️ bdName／acc 描述的是「二件組」＝① 雙重防護組，所以貼要跟 ① 一致；
         但它們沒有渲染到畫面，改 films 不會自動跟著變 → 只能手動同步。 */
-  giftNote: "本款<b>買殼就送玻璃貼</b>，所以沒有「單買殼」這個選項——最低就是這一組。",
+  giftNote: "本款<b>買殼就送一般玻璃貼</b>；① 雙重防護組換成的是<b>極地冰盾貼</b>，差別在貼的等級。",
   bd:       "GG07",
   bdName:   "極地冰岩殼 ＋ 玻璃貼｜二件組",
   bdPrice:  840,
@@ -978,10 +984,10 @@ const BUNDLES=[
 
 /* 組合名稱可以逐系列覆蓋：先看該系列的 names[第幾組]，沒填才用上面 BUNDLES 的預設名。
    （跟 films 覆蓋保護貼名稱是同一套寫法）
-   ⚠️ 目前唯一的例外是極地冰岩殼的 ①——本款買殼就送貼、沒有另一張「單買殼」卡，
-      ① 的價格就等於單買一個殼（490），所以那張卡叫「單買殼（送玻璃貼）」而不是「雙重防護組」。
-      括號要留著：其他五個系列的「單買殼」是真的只有殼，本款多了一張送的貼，
-      不寫出來兩邊同名不同內容，客人會以為別的系列也送。 */
+   ⚠️ 2026-08-24 起沒有系列在用這個覆蓋。極地冰岩殼原本把 ① 改名成「單買殼（送玻璃貼）」
+      並設 noSolo——等於整個系列少一張卡，跟需求單（s1-1 單買殼、s1-2 雙重防護組）對不起來。
+      現在改成正規做法：單買殼卡用 soloName／soloHas／soloFilm 表達「送的是一般玻璃貼」，
+      ① 回歸「雙重防護組」（配極地冰盾貼）。 */
 const bName = (s,b,bi) => (s.names && s.names[bi]) || b.name;
 
 /* 把 "NT$1,090" 這種文字轉成數字 1090；填的是 ◯ 佔位就回 null（代表「還沒定價」） */
@@ -1028,9 +1034,10 @@ function kitLabel(s,k,short,bi){
   switch(k){
     case "case":   return [s.caseName, ""];
     /* 保護貼可以逐組不同：先看該系列的 films[第幾組]，沒填才用 filmName。
-       ⚠️ 目前唯一的例外是極地冰岩殼的 ①（買殼送的是玻璃貼，其餘組合都配冰盾貼）。
-       bi 在「單買殼」那張卡是 undefined，但它的內容物只有殼、不會走到這裡。 */
-    case "screen": return [(s.films && s.films[bi]) || s.filmName, ""];
+       「單買殼」那張卡傳進來的 bi 是字串 "solo"，讀的是 soloFilm。
+       ⚠️ 目前唯一的例外是極地冰岩殼：單買殼送的是一般玻璃貼，
+          ① 雙重防護組以上都配極地冰盾貼——兩者差在「貼的等級」，不是有沒有貼。 */
+    case "screen": return [(bi==="solo" ? s.soloFilm : (s.films && s.films[bi])) || s.filmName, ""];
     case "lens":   return ["鏡頭貼", ""];
     /* ⚠️ 卡片版刻意拿掉品牌前綴「J/arch.」——不是漏寫。
        ③ 加了金屬夾片之後這一列會擠到把「可挑款」徽章推到第二行，整列 22px→45px，
@@ -1138,8 +1145,13 @@ document.getElementById('series').innerHTML=S.map(s=>{
             /* 單買殼也要有「原價 → 現價 → 省額」三件套，跟組合卡同一套算法。
                soloWas 沒填就顯示 NT$◯,◯◯◯ 佔位，省額同樣算不出來就顯示 省 $◯◯◯。
                ⚠️ 360° 支架的 soloPrice 是區間（NT$490~590），算不出單一數字 → 自動退回佔位，正確。 */
+            /* ⚠️ 單買殼卡的名稱與內容物可以逐系列覆蓋（soloName／soloHas／soloFilm）。
+               目前只有極地冰岩殼用到：它「買殼就送一般玻璃貼」，所以卡片要寫成
+               「單買殼（送玻璃貼）」並列出那張貼——不寫的話，跟其他五款同名不同內容，
+               客人會以為別款也送。（2026-08-24 補上 ① 雙重防護組時一起加的）*/
             const sWas = s.soloWas || yenW;
-            return {n:"單買殼",has:["case"],solo:true,pr:soloPrice,was:sWas,save:saveOf(soloPrice,sWas),
+            return {n:s.soloName||"單買殼",has:s.soloHas||["case"],solo:true,
+                    pr:soloPrice,was:sWas,save:saveOf(soloPrice,sWas),
                     t:s.sub,free:false,gapTxt:s.gapText||("$"+gap)};
           })()])
           .concat(BUNDLES.map(function(b,bi){
@@ -1162,7 +1174,7 @@ document.getElementById('series').innerHTML=S.map(s=>{
             <span class="bname">${c.n}${c.flag?`<em>${c.flag}</em>`:""}</span>
             <span class="bprices"><span class="bnow">${c.pr}</span>${c.was?`<span class="bwas">${c.was}</span>`:""}</span>
             <span class="bmeta">${c.free?'<span class="bfree">✓ 免運</span>':`<span class="bfree no">還差 ${c.gapTxt} 免運</span>`}<span class="bsave">${c.save||sv}</span></span>
-            <span class="bkit">${kitRows(s,c.has,false,c.i)}</span>
+            <span class="bkit">${kitRows(s,c.has,false,c.solo?"solo":c.i)}</span>
             <span class="bbtn">查看詳情</span>
           </span>
         </a>`}).join("")}
@@ -1193,8 +1205,9 @@ document.getElementById('series').innerHTML=S.map(s=>{
       /* 🐞 一頁的寬度＝per 張卡的實際位置，不等於 row.clientWidth。
          舊版用 i*clientWidth 當目標、用 scrollLeft/clientWidth 反推頁次，
          在「卡片數不是 per 的整數倍」時最後一頁會被 max-scroll 夾住，
-         算出來的頁次就永遠到不了最後一顆點（極地冰岩殼只有 5 張卡，桌機 per=3
-         → 點第 2 顆點只能捲到 520，520/1048 四捨五入＝0，第 1 顆點一直亮著）。
+         算出來的頁次就永遠到不了最後一顆點（當時極地冰岩殼只有 5 張卡，桌機 per=3
+         → 點第 2 顆點只能捲到 520，520/1048 四捨五入＝0，第 1 顆點一直亮著。
+         2026-08-24 補回單買殼卡後它是 6 張，但 360° 支架仍是 5 張，這個修正照樣需要）。
          改成一律用「卡片實際 offsetLeft」計算，與卡寬、間距、卡數都無關。 */
       var base=row.children[0].offsetLeft;
       var maxScroll=function(){return row.scrollWidth-row.clientWidth;};
