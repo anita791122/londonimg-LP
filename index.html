@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>iPhone 18 專屬頁｜需求單 × 原型 對照</title>
+<title>iPhone 18 專屬頁｜原型預覽</title>
 <style>
 :root{
   --ink:#1d1d1f; --soft:#6e6e73; --faint:#86868b; --line:#d8d8dc;
@@ -24,18 +24,15 @@ body{margin:0;background:var(--page);color:var(--ink);font-family:var(--han);
 .bar .ttl small{display:block;font-weight:400;font-size:11px;color:#a1a1a6;letter-spacing:0;margin-top:-1px;
   overflow:hidden;text-overflow:ellipsis}
 .spacer{flex:1 1 0;min-width:0}
-
-.seg{display:flex;background:rgba(255,255,255,.13);border-radius:9px;padding:3px;gap:2px;flex:none}
-.seg button{appearance:none;border:0;background:transparent;color:#d2d2d7;font:inherit;font-size:13px;
-  font-weight:500;padding:5px 13px;border-radius:7px;cursor:pointer;white-space:nowrap;transition:.15s}
-.seg button:hover{color:#fff}
-.seg button[aria-pressed="true"]{background:#fff;color:#1d1d1f;font-weight:600}
+/* 需求單不再並排顯示，但它還是同一批檔案的一部分 → 留一個直接開啟的入口 */
+.bar a.brieflink{color:#d2d2d7;font-size:13px;font-weight:500;text-decoration:none;
+  border:1px solid rgba(255,255,255,.28);border-radius:7px;padding:5px 12px;white-space:nowrap;
+  transition:.15s;flex:none}
+.bar a.brieflink:hover{color:#fff;border-color:rgba(255,255,255,.55)}
 
 /* ── 內容區 ── */
-.stage{position:absolute;inset:var(--barh) 0 0;display:flex;gap:1px;background:var(--line)}
-.pane{flex:1 1 50%;min-width:0;background:var(--panel);display:flex;flex-direction:column;position:relative}
-body[data-view="brief"] .pane.proto{display:none}
-body[data-view="proto"] .pane.brief{display:none}
+.stage{position:absolute;inset:var(--barh) 0 0;background:var(--line)}
+.pane{height:100%;background:var(--panel);display:flex;flex-direction:column;position:relative}
 
 .phead{height:var(--subh);flex:none;display:flex;align-items:center;gap:10px;padding:0 14px;
   border-bottom:1px solid var(--line);background:#fbfbfd}
@@ -75,25 +72,20 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
 .tip .x:hover{color:#fff}
 .tip[hidden]{display:none}
 
-/* ── 窄螢幕：強制分頁 ── */
+/* ── 窄螢幕 ── */
 @media(max-width:900px){
   .bar .ttl small{display:none}
-  body[data-view="split"] .pane.proto{display:none}
-  body[data-view="split"] .seg button[value="split"]{opacity:.4}
   .phead .dev{display:none}   /* 只隱藏按鈕群組，不要碰 iframe.devw */
 }
 @media(max-width:640px){
   .bar{gap:10px;padding:0 10px}
   .bar .ttl{font-size:13px}
-  .seg button{padding:5px 9px;font-size:12px}
   .phead{padding:0 10px;gap:8px}
   .phead .lbl i{display:none}
 }
 @media(max-width:420px){
   .bar .ttl{display:none}
 }
-.note{padding:40px 24px;color:var(--soft);font-size:14px;line-height:1.7;max-width:520px;margin:0 auto}
-.note code{background:#e8e8ec;padding:1px 6px;border-radius:4px;font-size:12.5px}
 
 /* ── 檔案載不到時的說明（預設隱藏；只有真的載不到才出現）── */
 .blank{position:absolute;inset:var(--subh) 0 0;background:#fff;display:flex;align-items:center;
@@ -106,54 +98,15 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
 .blank ol{margin:10px 0 0;padding-left:20px;font-size:14px;color:var(--soft);line-height:1.75}
 </style>
 </head>
-<body data-view="split">
+<body>
 
 <div class="bar">
-  <div class="ttl">iPhone 18 專屬頁　需求單 × 原型<small>設計對照用　·　左邊看規格，右邊看實際版位</small></div>
+  <div class="ttl">iPhone 18 專屬頁　原型預覽<small>設計對照用　·　切換手機／滿版看實際裁切</small></div>
   <div class="spacer"></div>
-  <div class="seg" role="group" aria-label="檢視模式">
-    <button value="split"  aria-pressed="true">並排</button>
-    <button value="brief"  aria-pressed="false">只看需求單</button>
-    <button value="proto"  aria-pressed="false">只看原型</button>
-  </div>
+  <a class="brieflink" href="image-brief.html" target="_blank" rel="noopener noreferrer">需求單 ↗</a>
 </div>
 
 <div class="stage">
-
-  <!-- 需求單 -->
-  <section class="pane brief">
-    <div class="phead">
-      <span class="lbl">需求單<i>image-brief.html</i></span>
-      <select class="jump" id="jumpBrief" aria-label="跳到需求單章節">
-        <option value="">跳到章節…</option>
-        <option value="0">先讀：這頁的圖會被裁切</option>
-        <option value="1">① 六格系列按鈕圖（6 張）</option>
-        <option value="2">② 系列情境 Banner（6 張）</option>
-        <option value="3">③ 組合卡主視覺（29 張）</option>
-        <option value="4">④ 交付方式</option>
-        <option value="5">⑤ 人物：可用 AI 生成</option>
-        <option value="6">⑥ 時程（8/24）</option>
-        <option value="7">⑦ 待確認</option>
-      </select>
-    </div>
-    <div class="frames">
-      <iframe id="fBrief" class="full" src="image-brief.html" title="網頁用圖需求單"></iframe>
-    </div>
-    <div class="blank" id="blankBrief" hidden><div class="in">
-      <h4>載不到 image-brief.html</h4>
-      <p>這頁本身不含內容，它是把<b>另外兩個檔案</b>並排顯示的外框，所以三個檔案必須放在<b>同一個資料夾</b>：</p>
-      <p><code>index.html</code>（本檔）<br>
-         <code>image-brief.html</code><br>
-         <code>iphone18-promo-prototype.html</code></p>
-      <ol>
-        <li><b>最省事的做法：直接開線上版</b><br>
-            <a href="https://anita791122.github.io/londonimg-LP/" target="_blank" rel="noopener noreferrer">anita791122.github.io/londonimg-LP/</a>
-            —— 不用下載，永遠是最新的</li>
-        <li>若要用本機檔案：確認三個檔都在同一層資料夾，並<b>雙擊 <code>index.html</code></b> 開啟
-            （不要從郵件或聊天視窗的預覽開）</li>
-      </ol>
-    </div></div>
-  </section>
 
   <!-- 原型 -->
   <section class="pane proto">
@@ -171,8 +124,6 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
       </select>
       <div class="dev" role="group" aria-label="裝置寬度">
         <button value="375"  aria-pressed="true">375<b>手機</b></button>
-        <button value="768"  aria-pressed="false">768<b>平板</b></button>
-        <button value="1280" aria-pressed="false">1280<b>桌機</b></button>
         <button value="full" aria-pressed="false">滿版<b>自適應</b></button>
       </div>
       <span class="clamped" id="clamped" hidden></span>
@@ -183,7 +134,16 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
 
     <div class="blank" id="blankProto" hidden><div class="in">
       <h4>載不到 iphone18-promo-prototype.html</h4>
-      <p>請把 <code>iphone18-promo-prototype.html</code> 放到跟本檔<b>同一個資料夾</b>，再雙擊本檔開啟。</p>
+      <p>這頁本身不含內容，它是把原型用 iframe 顯示的外框，所以兩個檔案必須放在<b>同一個資料夾</b>：</p>
+      <p><code>index.html</code>（本檔）<br>
+         <code>iphone18-promo-prototype.html</code></p>
+      <ol>
+        <li><b>最省事的做法：直接開線上版</b><br>
+            <a href="https://anita791122.github.io/londonimg-LP/" target="_blank" rel="noopener noreferrer">anita791122.github.io/londonimg-LP/</a>
+            —— 不用下載，永遠是最新的</li>
+        <li>若要用本機檔案：確認兩個檔都在同一層資料夾，並<b>雙擊 <code>index.html</code></b> 開啟
+            （不要從郵件或聊天視窗的預覽開）</li>
+      </ol>
     </div></div>
 
     <div class="tip" id="tip">
@@ -196,25 +156,11 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
 
 <script>
 (function(){
-  var body=document.body,
-      fProto=document.getElementById('fProto'),
-      fBrief=document.getElementById('fBrief'),
+  var fProto=document.getElementById('fProto'),
       wrap=document.getElementById('protoWrap'),
-      PROTO='iphone18-promo-prototype.html',
-      BRIEF='image-brief.html';
+      PROTO='iphone18-promo-prototype.html';
 
-  /* ── 檢視模式 ── */
-  var seg=document.querySelector('.seg');
-  seg.addEventListener('click',function(e){
-    var b=e.target.closest('button'); if(!b) return;
-    body.dataset.view=b.value;
-    [].forEach.call(seg.querySelectorAll('button'),function(x){
-      x.setAttribute('aria-pressed', String(x===b));
-    });
-    sizeProto();
-  });
-
-  /* ── 裝置寬度 ── */
+  /* ── 裝置寬度：只留 375（手機）與滿版（自適應）── */
   var devBar=document.querySelector('.dev'), devW='375';
   devBar.addEventListener('click',function(e){
     var b=e.target.closest('button'); if(!b) return;
@@ -252,21 +198,6 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
     this.selectedIndex=0;
   });
 
-  /* 需求單章節：優先用同來源捲動，被擋就退回 hash */
-  var H=['#h0','#h1','#h2','#h3','#h4','#h5'];
-  document.getElementById('jumpBrief').addEventListener('change',function(){
-    var i=this.value; if(i==='') return;
-    this.selectedIndex=0;
-    try{
-      var d=fBrief.contentDocument;
-      if(d){
-        var hs=d.querySelectorAll('h2');
-        if(hs[i]){ hs[i].scrollIntoView({block:'start'}); return; }
-      }
-    }catch(err){}
-    fBrief.src = BRIEF + H[i];   /* 跨來源時的退路 */
-  });
-
   /* ── 提示條 ── */
   var tip=document.getElementById('tip');
   function hide(){ tip.hidden=true; }
@@ -275,14 +206,7 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
     if(e.key==='Enter'||e.key===' '){e.preventDefault();hide();}
   });
 
-  /* 窄螢幕開場改成分頁 */
-  if(window.matchMedia('(max-width:900px)').matches){
-    body.dataset.view='brief';
-    seg.querySelector('[value="split"]').setAttribute('aria-pressed','false');
-    seg.querySelector('[value="brief"]').setAttribute('aria-pressed','true');
-  }
-
-  /* ── 載入偵測：載不到就明講，不要留兩片空白 ──
+  /* ── 載入偵測：載不到就明講，不要留一片空白 ──
      （典型情況：只收到這一個檔案、或從郵件預覽開啟）*/
   function loaded(f){
     try{
@@ -293,7 +217,6 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
     }catch(e){ return true; }                    /* 同上：讀不到不代表沒載入 */
   }
   function check(){
-    document.getElementById('blankBrief').hidden = loaded(fBrief);
     document.getElementById('blankProto').hidden = loaded(fProto);
   }
   /* ── 讓框內的「外部連結」改在新分頁開 ──
@@ -313,10 +236,8 @@ iframe.devw{box-shadow:0 6px 30px -8px rgba(0,0,0,.3);border-radius:10px;flex:no
       });
     }catch(e){}
   }
-  function onFrameLoad(f){ return function(){ check(); externalizeLinks(f); }; }
-  fBrief.addEventListener('load',onFrameLoad(fBrief));
-  fProto.addEventListener('load',onFrameLoad(fProto));
-  setTimeout(function(){ check(); externalizeLinks(fBrief); externalizeLinks(fProto); },1200);                        /* 兜底：連 load 都沒觸發的情況 */
+  fProto.addEventListener('load',function(){ check(); externalizeLinks(fProto); });
+  setTimeout(function(){ check(); externalizeLinks(fProto); },1200);   /* 兜底：連 load 都沒觸發的情況 */
 
   sizeProto();
   window.addEventListener('load',function(){ sizeProto(); check(); });
